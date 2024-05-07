@@ -1,4 +1,4 @@
-package com.hellcaster.JobHunter.service;
+package com.hellcaster.JobHunter.service.SecurityServices;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 

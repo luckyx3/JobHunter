@@ -1,4 +1,4 @@
-package com.hellcaster.JobHunter.service;
+package com.hellcaster.JobHunter.service.JobServices;
 
 import com.hellcaster.JobHunter.entities.Job;
 import com.hellcaster.JobHunter.models.CreateJob;

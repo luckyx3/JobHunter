@@ -5,13 +5,14 @@ import com.hellcaster.JobHunter.entities.enums.AuthStatus;
 import com.hellcaster.JobHunter.models.AuthRequestDto;
 import com.hellcaster.JobHunter.models.AuthResponseDto;
 import com.hellcaster.JobHunter.models.SignUpRequestDto;
-import com.hellcaster.JobHunter.service.UserService;
+import com.hellcaster.JobHunter.models.UpdateUserDto;
+import com.hellcaster.JobHunter.service.UserServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -40,22 +41,28 @@ public class UserController {
         return ResponseEntity.ok(authResponseDto);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-//        User user = userService.getUserById(id);
-//        return ResponseEntity.ok(user);
-//    }
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasRole('USER', 'ADMIN')")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UpdateUserDto updatedUser) {
+        Optional<User> user = userService.updateUser(id, updatedUser);
+//        if (user.isEmpty()) {
+//            return ResponseEntity.notFound().build();
+//        }
+//        return new ResponseEntity<>(user.get(), HttpStatus.OK);
+        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 //    @GetMapping
 //    public ResponseEntity<List<User>> getAllUsers() {
 //        List<User> users = userService.getAllUsers();
 //        return ResponseEntity.ok(users);
-//    }
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
-//        User user = userService.updateUser(id, updatedUser);
-//        return ResponseEntity.ok(user);
 //    }
 //
 //    @DeleteMapping("/{id}")

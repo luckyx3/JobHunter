@@ -1,4 +1,4 @@
-package com.hellcaster.JobHunter.service;
+package com.hellcaster.JobHunter.service.JobServices;
 
 import com.hellcaster.JobHunter.entities.Job;
 import com.hellcaster.JobHunter.models.CreateJob;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @Log4j2
-public class JobServiceImpl implements JobService{
+public class JobServiceImpl implements JobService {
     @Autowired
     private JobRepository jobRepository;
     @Override

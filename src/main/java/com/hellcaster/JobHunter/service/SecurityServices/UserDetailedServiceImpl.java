@@ -1,6 +1,7 @@
-package com.hellcaster.JobHunter.service;
+package com.hellcaster.JobHunter.service.SecurityServices;
 
 import com.hellcaster.JobHunter.repository.UserRepository;
+import com.hellcaster.JobHunter.service.SecurityServices.UserDetailedService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserDetailedServiceImpl implements UserDetailedService{
+public class UserDetailedServiceImpl implements UserDetailedService {
     private final UserRepository userRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

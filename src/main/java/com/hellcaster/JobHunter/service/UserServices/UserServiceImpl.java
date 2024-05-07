@@ -1,8 +1,10 @@
-package com.hellcaster.JobHunter.service;
+package com.hellcaster.JobHunter.service.UserServices;
 
 import com.hellcaster.JobHunter.entities.User;
 import com.hellcaster.JobHunter.models.SignUpRequestDto;
+import com.hellcaster.JobHunter.models.UpdateUserDto;
 import com.hellcaster.JobHunter.repository.UserRepository;
+import com.hellcaster.JobHunter.service.UserServices.UserService;
 import com.hellcaster.JobHunter.utils.JwtUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,4 +54,30 @@ public class UserServiceImpl implements UserService {
         String username = ((UserDetails)(authenticate.getPrincipal())).getUsername();
         return JwtUtils.generateToken(username);
     }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            return optionalUser;
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> updateUser(Long id, UpdateUserDto updatedUser) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if(optionalUser.isPresent()){
+            User user = optionalUser.get();
+            user.setRole(updatedUser.getRole());
+            user.setName(updatedUser.getName());
+            user.setExperience(updatedUser.getExperience());
+            user.setSkills(updatedUser.getSkills());
+            userRepository.save(user);
+            return optionalUser;
+        }
+        return Optional.empty();
+    }
+
+
 }

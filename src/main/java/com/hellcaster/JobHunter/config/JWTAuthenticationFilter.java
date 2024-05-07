@@ -1,7 +1,6 @@
 package com.hellcaster.JobHunter.config;
 
-import com.hellcaster.JobHunter.service.UserDetailedService;
-import com.hellcaster.JobHunter.service.UserService;
+import com.hellcaster.JobHunter.service.SecurityServices.UserDetailedService;
 import com.hellcaster.JobHunter.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
